@@ -2,6 +2,7 @@ package com.gimnasio.reservas.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.gimnasio.reservas.Enums.Nivel;
 @Entity
 @Data
 @NoArgsConstructor
