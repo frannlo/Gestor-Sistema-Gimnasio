@@ -18,7 +18,7 @@ public class Cliente {
     private String pinAcceso;
 
     @Enumerated(EnumType.STRING)
-    private Nivel nivel; // Cambiado a Enum
+    private Nivel nivel; 
 
     @ManyToOne
     @JoinColumn(name = "planElegido")
