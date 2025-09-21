@@ -3,8 +3,8 @@ package com.gimnasio.reservas.model;
 import com.gimnasio.reservas.Enums.Estado;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -15,7 +15,7 @@ public class Reserva {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_dni")
+    @JoinColumn(name = "cliente_dni", nullable = false) //null  porque un cliente puede no tener reserva
     private Cliente cliente;
 
     private LocalDateTime fechaHora;
