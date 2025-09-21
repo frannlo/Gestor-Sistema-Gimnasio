@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClienteRepository extends JpaRepository<Cliente, String> {
+    //Métodos personalizados no incluidios en JpaRepository
     List<Cliente> findByNivel(Nivel nivel);
-    Cliente findByDni(int dni);
+    Cliente findByCorreo(String correo);
 }
