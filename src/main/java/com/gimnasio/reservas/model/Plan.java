@@ -15,7 +15,8 @@ public class Plan {
 
     private double precio;
 
-    private int duracionSemanal; // ejemplo: 3 o 5 veces por semana
+    private int frecuenciaSemanal; // ejemplo: 3 o 5 veces por semana
 
+    private int duracionMeses = 1; // duración del plan en meses
     
 }
