@@ -26,6 +26,6 @@ public class RecepcionistaService {
 
     public Recepcionista login(String usuario, String pass){
         var r = recepcionistaRepository.findById(usuario).orElse(null);
-        return (r != null && pass != null && pass.equals(r.getContraseña())) ? r : null;
+        return (r != null && pass != null && pass.equals(r.getPassword())) ? r : null;
     }
 }
