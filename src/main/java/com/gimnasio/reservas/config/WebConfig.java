@@ -1,0 +1,17 @@
+package com.gimnasio.reservas.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")  // habilita CORS solo para tus endpoints REST
+                .allowedOrigins("http://localhost:5173", "http://localhost:3000") // frontend React (Vite/CRA)
+                .allowedMethods("GET", "POST", "PUT", "DELETE") // métodos permitidos
+                .allowCredentials(true); // si usás cookies/autenticación
+    }
+}
