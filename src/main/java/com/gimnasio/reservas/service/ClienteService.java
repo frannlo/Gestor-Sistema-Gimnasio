@@ -14,24 +14,26 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ClienteService{
+public class ClienteService {
+
     private final ClienteRepository clienteRepository;
-    //Método para listar todos los clientes
-    public List<Cliente> listarClientes(){
+
+    public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
-    //Método para obtener un cliente por su DNI
-    public Cliente buscarPorDni(String dni){
+
+    public Cliente buscarPorDni(String dni) {
         return clienteRepository.findById(dni)
-                .orElseThrow(() -> new ClienteNoEncontradoException("Cliente con el DNI: " + dni + " no encontrado"));
+                .orElseThrow(() -> new ClienteNoEncontradoException("Cliente con DNI " + dni + " no encontrado"));
     }
-    //Método para crear un nuevo cliente
+
     @Transactional
-    public Cliente crearCliente(ClienteDto dto){
-        try{
-            if(clienteRepository.findById(dto.correo()).isPresent()){
+    public Cliente crearCliente(ClienteDto dto) {
+        try {
+            if (clienteRepository.findByCorreo(dto.correo()) != null) {
                 throw new ClienteExistenteException("Ya existe un cliente con el correo: " + dto.correo());
             }
+
             Cliente cliente = Cliente.builder()
                     .dni(dto.dni())
                     .nombre(dto.nombre())
@@ -39,23 +41,23 @@ public class ClienteService{
                     .correo(dto.correo())
                     .telefono(dto.telefono())
                     .pinAcceso(dto.pinAcceso())
-                    .nivel(null) // nivel, plan, instructor se setean después
+                    .nivel(null)
                     .plan(null)
                     .instructor(null)
                     .build();
 
             return clienteRepository.save(cliente);
-
         } catch (DataIntegrityViolationException e) {
-            throw new ClienteExistenteException("Conflicto de datos: " + e.getMessage());
-        }   
+            // si la unicidad la hace la BD, capturamos este conflicto
+            throw new ClienteExistenteException("Conflicto de datos (posible correo duplicado): " + e.getMostSpecificCause().getMessage());
+        }
     }
-    // Método para eliminar un cliente
+
     @Transactional
-    public void eliminarCliente(String dni){
-        if(!clienteRepository.existsById(dni)){
-            throw new ClienteNoEncontradoException("Cliente con el DNI: " + dni + " no encontrado");
+    public void eliminarCliente(String dni) {
+        if (!clienteRepository.existsById(dni)) {
+            throw new ClienteNoEncontradoException("Cliente con DNI " + dni + " no encontrado");
         }
         clienteRepository.deleteById(dni);
     }
-} 
+}
