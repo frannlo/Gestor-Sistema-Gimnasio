@@ -20,7 +20,7 @@ public class RecepcionistaService {
         return recepcionistaRepository.save(recepcionista);
     }
     @Transactional
-    public void eliminar(String usuario){
+    public void eliminarRecepcionista(String usuario){
         recepcionistaRepository.deleteById(usuario);
     }
 
